@@ -9,5 +9,4 @@ public class Classification {
 
 	private final String name;
 	private final List<Position> positions;
-	
 }

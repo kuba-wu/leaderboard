@@ -1,19 +1,19 @@
 package com.kubawach.sport.leaderboard;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
 
-public class SecurityConfiguration  {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Bean
-	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-		return http
-			.authorizeExchange()
-				.anyExchange().permitAll().and()
-			.build();
-	}
+	 @Override
+	    protected void configure(HttpSecurity http) throws Exception {
+	        http
+	            .authorizeRequests()
+	                .anyRequest().permitAll()
+	                .and()
+	            .csrf().disable();
+	    }
 }

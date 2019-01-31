@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-	  BrowserRouter as Router,
-	  Route,
-	  Link
-	} from 'react-router-dom';
-
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
 
 class CompetitionsList extends Component {
 	
@@ -15,40 +8,59 @@ class CompetitionsList extends Component {
 		this.state = {
 			      error: null,
 			      isLoaded: false,
-			      competitions: []
+			      competitions: [],
+			      competition: ""
 			    };
 	}
 	
-	componentDidMount() {
-	    fetch("/api/v1/competition")
-	      .then(res => res.json())
+	loadCompetitions() {
+	    axios.get("/api/v1/competition")
 	      .then(
 	        (result) => {
 	          this.setState({
 	            isLoaded: true,
-	            competitions: result
+	            competitions: result.data,
+	            competition: ""
 	          });
-	        },
-	        // Note: it's important to handle errors here
-	        // instead of a catch() block so that we don't swallow
-	        // exceptions from actual bugs in components.
-	        (error) => {
+	        }).catch(error => {
 	          this.setState({
 	            isLoaded: true,
 	            error
 	          });
 	        }
-	      )
-	  }
+	      );
+	}
 	
+	componentDidMount() {
+		this.loadCompetitions();
+	  }
+
+	  saveNewCompetition(event) {
+		  	
+			axios.post("/api/v1/competition", {name: this.state.competition}).then(() => this.loadCompetitions());
+		  }
+	  
+	  setCompetition(event) {
+		  const value = event.target.value;
+		  this.setState({competition: value});
+	  }
+
   render() {
-	  const { error, isLoaded, competitions } = this.state;
+	  const { error, isLoaded, competitions, competition } = this.state;
 	    if (error) {
 	      return <div>Error: {error.message}</div>;
 	    } else if (!isLoaded) {
 	      return <div>Loading...</div>;
 	    } else {
 	      return (
+	        <div>
+	        	<span>Select competition</span>
+	        	<span> or </span>
+
+	        		
+	        		<input type="text" onChange={ this.setCompetition.bind(this) } value={ competition } />
+	        		<button type="button" onClick={this.saveNewCompetition.bind(this)} >Add new</button>
+
 	        <ul>
 	          {competitions.map(competition => (
 	            <li key={competition.name}>
@@ -56,6 +68,7 @@ class CompetitionsList extends Component {
 	            </li>
 	          ))}
 	        </ul>
+	        </div>
 	      );
 	    }
   }

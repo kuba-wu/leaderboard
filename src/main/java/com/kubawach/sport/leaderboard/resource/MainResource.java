@@ -1,33 +1,57 @@
 package com.kubawach.sport.leaderboard.resource;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kubawach.sport.leaderboard.model.Classification;
 import com.kubawach.sport.leaderboard.model.Competition;
-import com.kubawach.sport.leaderboard.model.Position;
+import com.kubawach.sport.leaderboard.model.Results;
+import com.kubawach.sport.leaderboard.service.MainService;
 
 @RestController
-public class MainResource {
-
+public class MainResource {	
+	
+	@Autowired private MainService service;
+	
 	@GetMapping("/api/v1/competition")
 	public List<Competition> allCompetitions() {
 		
-		return Arrays.asList(new Competition[]{
-				new Competition("IC Race"), new Competition("IC Podhale"), new Competition("Podhale Tour")});
+		return service.competitions();
 	}
 	
-	@GetMapping("/api/v1/competition/{name}/classification")
-	public List<Classification> classifications(@PathVariable String name) {
+	@PostMapping("/api/v1/competition")
+	public void saveNewCompetition(@RequestBody Competition competition) {
 		
-		return Arrays.asList(new Classification[]{
-				new Classification("General", Arrays.asList(new Position[] {
-						new Position(1, "staszek", 123), new Position(2, "zbyszek",11), new Position(3, "jarek", 5)})),
-				new Classification("Mountain", null), 
-				new Classification("Black Horse", null)});
+		service.addCompetition(competition);
+	}
+	
+	@GetMapping("/api/v1/competition/{competition}/classification")
+	public List<Classification> classifications(@PathVariable String competition) {
+		
+		return service.classificationsFor(competition);
+	}
+	
+	@PostMapping("/api/v1/competition/{competition}/classification")
+	public void saveNewClassification(@PathVariable String competition, @RequestBody Classification classification) {
+		
+		service.addClassification(competition, classification.getName());
+	}
+	
+	@GetMapping("/api/v1/competition/{competition}/classification/{classification}/results")
+	public List<Results> results(@PathVariable String competition, @PathVariable String classification) {
+		
+		return service.resultsFor(competition, classification);
+	}
+	
+	@PostMapping("/api/v1/competition/{competition}/classification/{classification}/results")
+	public void saveNewResults(@PathVariable String competition, @PathVariable String classification, @RequestBody Results newResults) {
+		
+		service.addResult(competition, classification, newResults);
 	}
 }
