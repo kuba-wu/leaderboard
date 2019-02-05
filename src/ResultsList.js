@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import ComponentWithNavigation from './ComponentWithNavigation';
+import ResultsTable from './ResultsTable';
 import axios from 'axios';
 
-class Results extends Component {
+class ResultsList extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -17,10 +19,10 @@ class Results extends Component {
 	
 	componentDidMount() {
 		
-		this.loadClassifications();
+		this.loadResults();
 	  }
 	
-	loadClassifications() {
+	loadResults() {
 		const competition = this.props.match.params.competition; 
 		const classification = this.props.match.params.classification; 
 
@@ -82,7 +84,9 @@ class Results extends Component {
 	const classification = this.props.match.params.classification;
 	const body = this.state.newResult;
 	
-	axios.post("/api/v1/competition/"+competition+"/classification/"+classification+"/results", body).then(() => this.loadClassifications());
+	axios
+		.post("/api/v1/competition/"+competition+"/classification/"+classification+"/results", body)
+		.then(() => this.loadResults());
 
   }
   
@@ -100,19 +104,6 @@ class Results extends Component {
         	<option key={result.date}>{result.date}</option>
     	);
     	
-    	let singleResults = "";
-
-    	if (result && result.results) {
-	
-    		singleResults = result.results.map((singleResult) =>
-    			<tr key={singleResult.result}>
-    				<td>{singleResult.participant}</td>
-    				<td>{singleResult.result}</td>
-    			</tr>
-    		);
-    		singleResults = <table><thead><tr><th>Participant</th><th>Result</th></tr></thead><tbody>{singleResults}</tbody></table>;
-    	}
-    	
     	let newResults = newResult.results.map((singleResult, index) =>
 			<tr key={index}>
 			
@@ -123,18 +114,13 @@ class Results extends Component {
     	
       return (
     		  <div>
-    		  	  <div>
-    		  	  	<a href="/">Competitions</a> &#9658; 
-    		  	  	<a href={"/competition/" + competition}>{competition}</a> &#9658; 
-    		  	  	<a href={"/competition/" + competition+"/classification/"+classification+"/results"}>{classification+" results"}</a>
-    		  	  </div>
 	    		  <div>
 	    		  	<span>Select results: </span>
 		            <select onChange={(e) => this.selectResult(e.target.value)}>
 		            	{optionItems}
 		            </select>
 	              </div>
-	              <div>{singleResults}</div>
+	              <div><ResultsTable result={result} /></div>
 	              <div>
 	              	<span>Add new results</span>
 	              	<div>
@@ -161,4 +147,4 @@ class Results extends Component {
   }
 }
 
-export default Results;
+export default ComponentWithNavigation(ResultsList);

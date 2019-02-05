@@ -6,7 +6,7 @@ import {
 
 import CompetitionsList from './CompetitionsList';
 import Competition from './Competition';
-import Results from './Results';
+import ResultsList from './ResultsList';
 
 import './App.css';
 
@@ -18,8 +18,8 @@ class App extends Component {
 	    		  <Router>
 	    	        <div className="container">
 	    	          <Route exact path="/" component={CompetitionsList} />
-	    	          <Route path="/competition/:competition/classification/:classification/results" component={Results} />
 	    	          <Route exact path="/competition/:competition" component={Competition} />
+	    	          <Route path="/competition/:competition/classification/:classification/results" component={ResultsList} />
 	    	        </div>
 	    	      </Router>
 	      );
