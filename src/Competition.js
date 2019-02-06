@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ComponentWithNavigation from './ComponentWithNavigation';
+import CompetitionRanking from './CompetitionRanking';
 import axios from 'axios';
 
 class Competiton extends Component {
@@ -109,28 +110,6 @@ class Competiton extends Component {
           	<button type="submit" onClick={ this.saveMapping.bind(this) }>Save mapping</button>
 		</div>);
   }
-  
-  renderRanking(positions) {
-	  const ranking = positions.map((position) =>
-		<tr key={position.position}>
-			<td>{position.position}</td>
-			<td>{position.participant}</td>
-			<td>{position.points}</td>
-		</tr>
-	  );
-	  return (
-		  <div>
-	  		<h2>Current ranking</h2>
-	  		<table>
-	  			<thead>
-	  				<tr>
-	  					<th>Position</th><th>Participant</th><th>Points</th>
-	  				</tr>
-	  			</thead>
-	  			<tbody>{ranking}</tbody>
-	  		</table>
-	  	</div>);
-  }
 
   render() {
 	  const { error, isLoaded, classifications, classification, newClassification } = this.state;
@@ -152,7 +131,6 @@ class Competiton extends Component {
 	    	if (classification) {
 	
 	    		mapping = this.renderMapping(classification.mapping);
-	    		ranking = this.renderRanking(classification.positions);
 	    		
 		    	resultsLink = <span><a href={"/competition/"+competition+"/classification/"+classification.name+"/results"}>View results</a></span>;
 	    	}	    	
@@ -176,9 +154,7 @@ class Competiton extends Component {
 	    		  <div>
 	    		  	{mapping}
 	    		  </div>
-	    		  <div>
-	    		  	{ranking}
-	    		  </div>
+	    		  <CompetitionRanking positions={classification.positions} />
 	          </div>
 	      );
 	    }

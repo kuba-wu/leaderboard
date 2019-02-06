@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ComponentWithNavigation from './ComponentWithNavigation';
 import ResultsTable from './ResultsTable';
+import ResultsEditor from './ResultsEditor';
 import axios from 'axios';
 
 class ResultsList extends Component {
@@ -18,7 +19,6 @@ class ResultsList extends Component {
 	}
 	
 	componentDidMount() {
-		
 		this.loadResults();
 	  }
 	
@@ -54,41 +54,8 @@ class ResultsList extends Component {
 		  }
 	  );
   }
-  
-  addRow() {
-	  let newResult = this.state.newResult;
-	  newResult.results.push({participant: "dummy", result: ""});
-	  this.setState({newResult : newResult});
-  }
-  
-  setParticipant(index, event) {
-	  let newResult = this.state.newResult;
-	  newResult.results[index].participant = event.target.value;
-	  this.setState({newResult : newResult});
-  }
-  
-  setPosition(index, event) {
-	  let newResult = this.state.newResult;
-	  newResult.results[index].result = event.target.value;
-	  this.setState({newResult : newResult});
-  }
-  
-  setDate(event) {
-	  const value = event.target.value;
-	  this.setState({newResult: {date: value, results: this.state.newResult.results}});
-  }
- 
-  saveNewResult() {
 
-	const competition = this.props.match.params.competition; 
-	const classification = this.props.match.params.classification;
-	const body = this.state.newResult;
-	
-	axios
-		.post("/api/v1/competition/"+competition+"/classification/"+classification+"/results", body)
-		.then(() => this.loadResults());
-
-  }
+  loadResultsCallback = () => this.loadResults();
   
   render() {
 	  const competition = this.props.match.params.competition; 
@@ -100,17 +67,9 @@ class ResultsList extends Component {
 	      return <div>Loading...</div>;
 	    } else {
 
-	    	let optionItems = results.map((result) =>
-        	<option key={result.date}>{result.date}</option>
-    	);
+    	let optionItems = results.map(
+    		(result) => <option key={result.date}>{result.date}</option>);
     	
-    	let newResults = newResult.results.map((singleResult, index) =>
-			<tr key={index}>
-			
-				<td><input type="text" onChange={ this.setParticipant.bind(this, index) } value={ singleResult.participant } /></td>
-				<td><input type="text" onChange={ this.setPosition.bind(this, index) } value={ singleResult.result } /></td>
-			</tr>
-    	);
     	
       return (
     		  <div>
@@ -121,26 +80,7 @@ class ResultsList extends Component {
 		            </select>
 	              </div>
 	              <div><ResultsTable result={result} /></div>
-	              <div>
-	              	<span>Add new results</span>
-	              	<div>
-	              		<span>Date:</span>
-	              		<span><input type="text" onChange={ this.setDate.bind(this) } value={ newResult.date } /></span>
-	              	</div>
-
-	              	<table>
-	              		<thead>
-	              			<tr>
-	              				<th>Participant</th><th>Result</th>
-	              			</tr>
-	              		</thead>
-	              		<tbody>
-	              			{newResults}
-	              		</tbody>
-	              	</table>
-	              	<button type="button" onClick={ this.addRow.bind(this)}>Add next</button>
-	              	<button type="submit" onClick={ this.saveNewResult.bind(this) }>Save result</button>
-	              </div>
+	              <div><ResultsEditor loadResults={this.loadResultsCallback} competition={competition} classification={classification} /></div>
 	          </div>
       );
     }

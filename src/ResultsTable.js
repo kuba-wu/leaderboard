@@ -15,11 +15,17 @@ class ResultsTable extends Component {
     				<td>{singleResult.result}</td>
     			</tr>
     		);
-    		singleResults = <table><thead><tr><th>Participant</th><th>Result</th></tr></thead><tbody>{singleResults}</tbody></table>;
     	}
 
     	
-      return (<div>{singleResults}</div>);
+      return (<table>
+      			<thead>
+      				<tr>
+      					<th>Participant</th><th>Result</th>
+      				</tr>
+      			</thead>
+      			<tbody>{singleResults}</tbody>
+      		  </table>);
     }
 }
 
