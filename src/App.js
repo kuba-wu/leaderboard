@@ -4,9 +4,9 @@ import {
 	  Route
 	} from 'react-router-dom';
 
-import CompetitionsList from './CompetitionsList';
-import Competition from './Competition';
-import ResultsList from './ResultsList';
+import CompetitionsList from './CompetitionsList/CompetitionsList';
+import Competition from './Competition/Competition';
+import Results from './Results/Results';
 
 import './App.css';
 
@@ -19,7 +19,7 @@ class App extends Component {
 	    	        <div className="container">
 	    	          <Route exact path="/" component={CompetitionsList} />
 	    	          <Route exact path="/competition/:competition" component={Competition} />
-	    	          <Route path="/competition/:competition/classification/:classification/results" component={ResultsList} />
+	    	          <Route path="/competition/:competition/classification/:classification/results" component={Results} />
 	    	        </div>
 	    	      </Router>
 	      );

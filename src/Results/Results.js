@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import ComponentWithNavigation from './ComponentWithNavigation';
+import ComponentWithNavigation from '../Common/ComponentWithNavigation';
 import ResultsTable from './ResultsTable';
 import ResultsEditor from './ResultsEditor';
+import ResultsSelector from './ResultsSelector';
 import axios from 'axios';
 
-class ResultsList extends Component {
+class Results extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -13,9 +14,8 @@ class ResultsList extends Component {
 			      isLoaded: false,
 			      results: [],
 			      selectedResult: "",
-			      result: null,
-			      newResult: {date: (new Date()).toISOString().slice(0, 10), results: [{participant: "dummy", result: ""}]}
-			    };
+			      result: null			    
+		};
 	}
 	
 	componentDidMount() {
@@ -56,6 +56,7 @@ class ResultsList extends Component {
   }
 
   loadResultsCallback = () => this.loadResults();
+  setSelectedResultCallback = (result) => this.setState({result: result});
   
   render() {
 	  const competition = this.props.match.params.competition; 
@@ -67,18 +68,9 @@ class ResultsList extends Component {
 	      return <div>Loading...</div>;
 	    } else {
 
-    	let optionItems = results.map(
-    		(result) => <option key={result.date}>{result.date}</option>);
-    	
-    	
       return (
     		  <div>
-	    		  <div>
-	    		  	<span>Select results: </span>
-		            <select onChange={(e) => this.selectResult(e.target.value)}>
-		            	{optionItems}
-		            </select>
-	              </div>
+	    		  <div><ResultsSelector results={results} setSelectedResult={this.setSelectedResultCallback}/></div>
 	              <div><ResultsTable result={result} /></div>
 	              <div><ResultsEditor loadResults={this.loadResultsCallback} competition={competition} classification={classification} /></div>
 	          </div>
@@ -87,4 +79,4 @@ class ResultsList extends Component {
   }
 }
 
-export default ComponentWithNavigation(ResultsList);
+export default ComponentWithNavigation(Results);

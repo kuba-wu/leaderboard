@@ -55,13 +55,11 @@ class ResultsEditor extends Component {
   render() {
 
 	  const newResult = this.state.newResult;
-    	let newResults = newResult.results.map((singleResult, index) =>
-			<tr key={index}>
-			
-				<td><input type="text" onChange={ this.setParticipant.bind(this, index) } value={ singleResult.participant } /></td>
-				<td><input type="text" onChange={ this.setPosition.bind(this, index) } value={ singleResult.result } /></td>
-			</tr>
-    	);
+      let newResults = newResult.results.map((singleResult, index) =>
+	  	  <tr key={index}>
+			  <td><input type="text" onChange={ this.setParticipant.bind(this, index) } value={ singleResult.participant } /></td>
+			  <td><input type="text" onChange={ this.setPosition.bind(this, index) } value={ singleResult.result } /></td>
+		  </tr>);
     	
       return (
 	              <div>
