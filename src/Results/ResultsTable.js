@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
 
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
 class ResultsTable extends Component {
-	
-  render() {
 
-    	let singleResults = null;
+    constructor(props) {
+        super(props);
+        this.columns = [
+            {
+                Header: "Participant",
+                accessor: "participant"
+            },
+            {
+                Header: "Result",
+                accessor: "result"
+            }
+        ];
+    }
 
-    	if (this.props.result) {
-	
-    		const result = this.props.result; 
-    		singleResults = result.results.map((singleResult) =>
-    			<tr key={singleResult.result}>
-    				<td>{singleResult.participant}</td>
-    				<td>{singleResult.result}</td>
-    			</tr>
-    		);
-    	}
+    render() {
+        if (!this.props.result) {
+            return null;
+        }
 
-    	
-      return (<table>
-      			<thead>
-      				<tr>
-      					<th>Participant</th><th>Result</th>
-      				</tr>
-      			</thead>
-      			<tbody>{singleResults}</tbody>
-      		  </table>);
+        return (
+            <div>
+                <h2>Results from {this.props.result.date}</h2>
+                <ReactTable
+                    data={this.props.result.results}
+                    columns={this.columns}
+                    defaultPageSize={5}
+                    className="-striped -highlight"
+                />
+            </div>);
     }
 }
 

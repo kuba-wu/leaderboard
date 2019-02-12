@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
 
+//Import React Table
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
 class CompetitionRanking extends Component {
-	
-  render() {
-	  const ranking = this.props.positions.map((position) =>
-		<tr key={position.position}>
-			<td>{position.position}</td>
-			<td>{position.participant}</td>
-			<td>{position.points}</td>
-		</tr>
-	  );
-	  return (
-		  <div>
-	  		<h2>Current ranking</h2>
-	  		<table>
-	  			<thead>
-	  				<tr>
-	  					<th>Position</th><th>Participant</th><th>Points</th>
-	  				</tr>
-	  			</thead>
-	  			<tbody>{ranking}</tbody>
-	  		</table>
-	  	</div>);
-  }
+
+    constructor(props) {
+        super(props);
+        this.columns = [
+                        {
+                            Header: "Position",
+                            accessor: "position"
+                        },
+                        {
+                            Header: "Participant",
+                            accessor: "participant"
+                        },
+                        {
+                            Header: "Points",
+                            accessor: "points"
+                        }
+                    ];
+    } 
+
+    render() {
+        if (!this.props.positions) {
+            return null;
+        }
+
+        return (
+            <div>
+                <h2>Current ranking</h2>
+                <ReactTable
+                    data={this.props.positions}
+                    columns={this.columns}
+                    defaultPageSize={5}
+                    className="-striped -highlight"
+                />
+            </div>);
+    }
 }
 
 export default CompetitionRanking;

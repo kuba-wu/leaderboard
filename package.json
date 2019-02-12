@@ -54,7 +54,8 @@
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3",
-    "axios": "0.18.0"
+    "axios": "0.18.0",
+    "react-table": "v6.9.0"
   },
   "scripts": {
     "start": "node scripts/start.js",

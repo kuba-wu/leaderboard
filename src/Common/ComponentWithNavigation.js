@@ -1,4 +1,5 @@
 import React from 'react';
+import {ClassificationLink, ResultsLink} from './Navigation';
 
 export default (Component) => {
 	
@@ -11,8 +12,8 @@ export default (Component) => {
 		  <div>
 			  <div>
 			  	<span><a href="/">Competitions</a> &#9658;</span> 
-			  	{competition && (<span><a href={"/competition/" + competition}>{competition}</a>  &#9658; </span>)} 
-			  	{classification && (<span><a href={"/competition/" + competition+"/classification/"+classification+"/results"}>{classification+" results"}</a></span>)}
+			  	<ClassificationLink competition={competition} />
+			  	<ResultsLink competition={competition} classification={classification} />
 			  </div>
 			  <Component {...props} />
 		  </div>

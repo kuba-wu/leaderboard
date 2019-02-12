@@ -27,7 +27,7 @@ class ClassificationEditor extends Component {
 	    		<div>
 		        	  <input type="text" onChange={ this.setNewClassification.bind(this) } value={ this.state.newClassification } />
 		        	  <button type="button" onClick={this.saveNewClassification.bind(this)} >Add new</button>
-	          </div>
+	            </div>
 	      );
   }
 }

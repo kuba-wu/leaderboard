@@ -31,8 +31,7 @@ class Results extends Component {
 	    	this.setState({
 	            isLoaded: true,
 	            results: results,
-		    	result:  (results.length > 0 ? results[0] : null),
-		    	newResult: {date: (new Date()).toISOString().slice(0, 10), results: [{participant: "dummy", result: ""}]}
+		    	result:  (results.length > 0 ? results[0] : null)
 	          });
 	          
 	        }).catch(error => {
@@ -61,7 +60,7 @@ class Results extends Component {
   render() {
 	  const competition = this.props.match.params.competition; 
 	  const classification = this.props.match.params.classification;
-	  const { error, isLoaded, results, result, newResult } = this.state;
+	  const { error, isLoaded, results, result } = this.state;
 	    if (error) {
 	      return <div>Error: {error.message}</div>;
 	    } else if (!isLoaded) {
