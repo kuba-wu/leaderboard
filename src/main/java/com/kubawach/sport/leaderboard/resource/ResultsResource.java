@@ -17,15 +17,15 @@ public class ResultsResource {
 	
 	@Autowired private MainService service;
 	
-	@GetMapping("/api/v1/competition/{competition}/classification/{classification}/results")
-	public List<Results> results(@PathVariable String competition, @PathVariable String classification) {
+	@GetMapping("/api/v1/competition/{competition}/category/{category}/results")
+	public List<Results> results(@PathVariable String competition, @PathVariable String category) {
 		
-		return service.resultsFor(competition, classification);
+		return service.resultsFor(competition, category);
 	}
 	
-	@PostMapping("/api/v1/competition/{competition}/classification/{classification}/results")
-	public void saveNewResults(@PathVariable String competition, @PathVariable String classification, @RequestBody Results newResults) {
+	@PostMapping("/api/v1/competition/{competition}/category/{category}/results")
+	public void saveNewResults(@PathVariable String competition, @PathVariable String category, @RequestBody Results newResults) {
 		
-		service.addResult(competition, classification, newResults);
+		service.addResult(competition, category, newResults);
 	}
 }

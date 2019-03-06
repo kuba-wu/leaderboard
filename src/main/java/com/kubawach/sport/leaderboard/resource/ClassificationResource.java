@@ -2,6 +2,7 @@ package com.kubawach.sport.leaderboard.resource;
 
 import java.util.List;
 
+import com.kubawach.sport.leaderboard.model.ClassificationUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,9 @@ public class ClassificationResource {
 	}
 	
 	@PostMapping("/api/v1/competition/{competition}/classification")
-	public Classification saveNewClassification(@PathVariable String competition, @RequestBody Classification classification) {
+	public Classification saveNewClassification(@PathVariable String competition, @RequestBody ClassificationUpdate classification) {
 		
-		return service.addClassification(competition, classification.getName());
+		return service.addClassification(competition, classification);
 	}
 	
 	@PostMapping("/api/v1/competition/{competition}/classification/{classification}/positionMapping")

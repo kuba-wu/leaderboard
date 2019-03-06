@@ -28,3 +28,6 @@ hs_err_pid*
 .project
 .settings
 .mvn
+.idea
+.idea/*
+*.iml
