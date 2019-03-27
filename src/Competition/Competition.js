@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import ComponentWithNavigation from '../Common/ComponentWithNavigation';
-import { ResultsLink } from '../Common/Navigation';
+import {ResultsLink, ClassificationLink} from '../Common/Navigation';
 import CompetitionRanking from './CompetitionRanking';
-import ClassificationMapping from './ClassificationMapping';
 import ClassificationSelector from './ClassificationSelector';
 import ClassificationEditor from './ClassificationEditor';
 import axios from 'axios';
@@ -29,12 +28,12 @@ class Competiton extends Component {
         axios.get("/api/v1/competition/" + competition + "/classification")
             .then((result) => {
 
-                this.setState({
-                    isLoaded: true,
-                    classifications: result.data,
-                    classification: (classification ? classification : (result.data.length > 0 ? result.data[0] : null)),
-                });
-            },
+                    this.setState({
+                        isLoaded: true,
+                        classifications: result.data,
+                        classification: (classification ? classification : (result.data.length > 0 ? result.data[0] : null)),
+                    });
+                },
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -44,11 +43,15 @@ class Competiton extends Component {
             )
     }
 
-    loadClassificiationCallback = (classification) => this.loadClassifications(classification);
-    setClassificationCallback = (classification) => this.setState({ classification: classification });
+    loadClassificationCallback = (classification) => this.loadClassifications(classification);
+    setClassificationCallback = (classification) => this.setState({classification: classification});
+
+    removeClassification(classification) {
+
+    }
 
     render() {
-        const { error, isLoaded, classifications, classification } = this.state;
+        const {error, isLoaded, classifications, classification} = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -59,15 +62,20 @@ class Competiton extends Component {
             return (
                 <div>
                     <div>
-                        <ClassificationSelector classifications={classifications} classification={classification} setClassification={this.setClassificationCallback} />
-                        <span> or </span>
-                        <ClassificationEditor competition={competition} loadClassifications={this.loadClassificiationCallback} />
+                        <span>View all</span><ResultsLink competition={competition} results={"results"}/>
                     </div>
                     <div>
-                        <ResultsLink competition={competition} classification={classification ? classification.name : null} />
+                        <ClassificationSelector classifications={classifications} classification={classification} setClassification={this.setClassificationCallback}/>
+                        <span> or </span>
+                        <ClassificationEditor competition={competition} loadClassifications={this.loadClassificationCallback}/>
                     </div>
-                    <ClassificationMapping mapping={classification && classification.mapping} classification={classification && classification.name} competition={competition} loadClassifications={this.loadClassificiationCallback} />
-                    <CompetitionRanking positions={classification && classification.positions} />
+                    <div>
+                        <span>See <ClassificationLink competition={competition} classification={classification && classification.name}/> details </span>
+                        or
+                        <span><button disabled={!classification} type="button" onClick={this.removeClassification.bind(this, classification)}>Remove {classification && classification.name}</button></span>
+                    </div>
+
+                    <CompetitionRanking positions={classification && classification.positions}/>
                 </div>
             );
         }

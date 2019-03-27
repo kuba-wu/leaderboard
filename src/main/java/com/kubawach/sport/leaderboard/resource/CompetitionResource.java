@@ -3,10 +3,7 @@ package com.kubawach.sport.leaderboard.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kubawach.sport.leaderboard.model.Competition;
 import com.kubawach.sport.leaderboard.service.MainService;
@@ -26,5 +23,10 @@ public class CompetitionResource {
 	public void saveNewCompetition(@RequestBody Competition competition) {
 		
 		service.addCompetition(competition);
+	}
+
+	@DeleteMapping("/api/v1/competition/{competitionName}")
+	public void removeCompetition(@PathVariable String competitionName) {
+		service.removeCompetition(competitionName);
 	}
 }

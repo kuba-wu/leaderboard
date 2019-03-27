@@ -17,8 +17,8 @@ class ClassificationMapping extends Component {
 		const body = this.state.mapping;
 		
 		axios
-			.post("/api/v1/competition/"+competition+"/classification/"+classification+"/positionMapping", body)
-			.then((newClassification) => this.props.loadClassifications(newClassification.data));
+			.post(`/api/v1/competition/${competition}/classification/${classification}/positionMapping`, body)
+			.then(() => this.props.loadClassifications());
 	  }
 	
   addPosition() {
@@ -39,8 +39,7 @@ class ClassificationMapping extends Component {
 	  if (!this.state.mapping) {
 		  return null;
  	  }
-	
-	    	
+
       const mapping = this.state.mapping.positionToPoints.map((points, index) =>
 		<tr key={index+1}>
 			<td>{index+1}</td>

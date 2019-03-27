@@ -89,17 +89,25 @@ public class MainService {
 		}
 		return sorted(classifications.get(competition).values());
 	}
+
+	public Classification classification(String competition, String classificationName) {
+		if (!competitions.containsKey(competition)) {
+			log.warn("Competition "+competition+" not found. Returning null.");
+			return null;
+		}
+		return classifications.get(competition).get(classificationName);
+	}
 	
-	public boolean addResult(String competition, String resultCategory, Results result) {
+	public Results addResult(String competition, String resultCategory, Results result) {
 		
 		if (!competitions.containsKey(competition)) {
 			log.warn("Competition: "+competition+" not found");
-			return false;
+			return null;
 		}
 		
 		if (!categories.get(competition).containsKey(resultCategory)) {
 			log.warn("Result category: "+resultCategory+" not found");
-			return false;
+			return null;
 		}
 		
 		results.get(competition).get(resultCategory).add(result);
@@ -108,7 +116,7 @@ public class MainService {
 		for (Classification classification : classifications) {
 			updateClassification(competition, classification.getName());
 		}
-		return true;
+		return result;
 	}
 	
 	public Classification savePositionMapping(String competition, String classification, PositionMapping mapping) {
@@ -180,5 +188,18 @@ public class MainService {
 
 		log.info("Added category: "+newCategory+" to competition: "+competition);
 		return newCategory;
+	}
+
+	public boolean removeCompetition(String competitionName) {
+		if (!competitions.containsKey(competitionName)) {
+			log.warn("Competition "+competitionName+" does not exists.");
+			return false;
+		}
+		competitions.remove(competitionName);
+		classifications.remove(competitionName);
+		results.remove(competitionName);
+		categories.remove(competitionName);
+
+		return true;
 	}
 }

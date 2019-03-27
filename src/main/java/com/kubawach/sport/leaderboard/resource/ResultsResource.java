@@ -24,8 +24,8 @@ public class ResultsResource {
 	}
 	
 	@PostMapping("/api/v1/competition/{competition}/category/{category}/results")
-	public void saveNewResults(@PathVariable String competition, @PathVariable String category, @RequestBody Results newResults) {
+	public Results saveNewResults(@PathVariable String competition, @PathVariable String category, @RequestBody Results newResults) {
 		
-		service.addResult(competition, category, newResults);
+		return service.addResult(competition, category, newResults);
 	}
 }

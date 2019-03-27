@@ -18,7 +18,13 @@ import com.kubawach.sport.leaderboard.service.MainService;
 public class ClassificationResource {	
 	
 	@Autowired private MainService service;
-	
+
+	@GetMapping("/api/v1/competition/{competition}/classification/{classification}")
+
+	public Classification classification(@PathVariable String competition, @PathVariable String classification) {
+		return service.classification(competition, classification);
+	}
+
 	@GetMapping("/api/v1/competition/{competition}/classification")
 	public List<Classification> classifications(@PathVariable String competition) {
 		

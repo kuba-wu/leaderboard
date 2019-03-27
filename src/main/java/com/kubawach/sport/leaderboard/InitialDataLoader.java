@@ -34,11 +34,11 @@ public class InitialDataLoader {
 			new ClassificationUpdate("Black Horse", null, ResultsType.POSITION, names())};
 	
 	private final List<Results> RESULTS = new ArrayList<>(Arrays.asList(new Results[]{
-			new Results(parse("2019-01-10"), Arrays.asList(new SingleResult[] {
+			new Results(null, parse("2019-01-10"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "1"), new SingleResult("zbyszek","3"), new SingleResult("jarek", "2")})),
-			new Results(parse("2019-01-11"), Arrays.asList(new SingleResult[] {
+			new Results(null, parse("2019-01-11"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")})), 
-			new Results(parse("2019-01-12"), Arrays.asList(new SingleResult[] {
+			new Results(null, parse("2019-01-12"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")}))
 	}));
 
