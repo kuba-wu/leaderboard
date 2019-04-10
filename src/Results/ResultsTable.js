@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import { withTranslation } from 'react-i18next';
+
 
 class ResultsTable extends Component {
 
     constructor(props) {
         super(props);
+        const {t} = this.props;
         this.columns = [
             {
-                Header: "Participant",
+                Header: t('ResultsTable.Participant'),
                 accessor: "participant"
             },
             {
-                Header: "Result",
+                Header: t('ResultsTable.Result'),
                 accessor: "result"
             }
         ];
@@ -24,9 +27,10 @@ class ResultsTable extends Component {
             return null;
         }
 
+        const {t} = this.props;
         return (
             <div>
-                <h2>Results from {this.props.result.date}</h2>
+                <h2>{t('ResultsTable.Header')} {this.props.result.date}</h2>
                 <ReactTable
                     data={this.props.result.results}
                     columns={this.columns}
@@ -37,4 +41,4 @@ class ResultsTable extends Component {
     }
 }
 
-export default ResultsTable;
+export default withTranslation()(ResultsTable);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
 
 class ResultsEditor extends Component {
 
@@ -62,6 +63,7 @@ class ResultsEditor extends Component {
 
     render() {
 
+        const {t} = this.props;
         const category = this.props.category;
         if (!category) {
             return null;
@@ -76,7 +78,7 @@ class ResultsEditor extends Component {
 
         return (
             <div>
-                <span>Add new results</span>
+                <span>{t('ResultsEditor.Header')}</span>
                 <div>
                     <span>Date:</span>
                     <span><input type="text" onChange={this.setDate.bind(this)} value={newResult.date}/></span>
@@ -85,19 +87,19 @@ class ResultsEditor extends Component {
                 <table>
                     <thead>
                     <tr>
-                        <th>Participant</th>
-                        <th>Result</th>
+                        <th>{t('ResultsEditor.Participant')}</th>
+                        <th>{t('ResultsEditor.Result')}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {newResults}
                     </tbody>
                 </table>
-                <button type="button" onClick={this.addRow.bind(this)}>Add next</button>
-                <button type="submit" onClick={this.saveNewResult.bind(this)}>Save result</button>
+                <button type="button" onClick={this.addRow.bind(this)}>{t('ResultsEditor.AddButton')}</button>
+                <button type="submit" onClick={this.saveNewResult.bind(this)}>{t('ResultsEditor.SaveButton')}</button>
             </div>
         );
     }
 }
 
-export default ResultsEditor;
+export default withTranslation()(ResultsEditor);

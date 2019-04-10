@@ -48,5 +48,20 @@
   "ResultsType": {
     "TIME": "Pomiar czasu",
     "POSITION": "Pozycja"
+  },
+  "ResultsEditor": {
+    "Header": "Dodaj nowy wynik",
+    "Participant": "Uczestnik",
+    "Result": "Wynik",
+    "AddButton" : "Kolejny wiersz",
+    "SaveButton" : "Zapisz wyniki"
+  },
+  "ResultsSelector" : {
+    "Header": "Wybierz liste wynikow:"
+  },
+  "ResultsTable": {
+    "Header": "Wyniki z dnia",
+    "Participant": "Uczestnik",
+    "Result": "Rezultat"
   }
 }

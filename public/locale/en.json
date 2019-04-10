@@ -43,5 +43,20 @@
   "ResultsType": {
     "TIME": "Time",
     "POSITION": "Position"
+  },
+  "ResultsEditor": {
+    "Header": "Add new results",
+    "Participant": "Participant",
+    "Result": "Result",
+    "AddButton" : "Add next",
+    "SaveButton" : "Save result"
+  },
+  "ResultsSelector" : {
+    "Header": "Select results:"
+  },
+  "ResultsTable": {
+    "Header": "Results from",
+    "Participant": "Participant",
+    "Result": "Result"
   }
 }

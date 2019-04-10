@@ -47,7 +47,7 @@ class Results extends Component {
     loadResults(categoryId, preselectedResult) {
         const competition = this.props.match.params.competition;
 
-        const selected = this.state.categories.filter(category =>  (categoryId === category.id))[0];
+        const selected = this.state.categories.filter(category => (categoryId === category.id))[0];
 
         axios.get(`/api/v1/competition/${competition}/category/${selected.name}/results`).then(res => {
             const results = res.data.sort(function (first, second) {
