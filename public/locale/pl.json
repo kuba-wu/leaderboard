@@ -1,0 +1,52 @@
+{
+  "CompetitionsList": {
+    "select": "Wybierz zawody",
+    "add": "Dodaj nowe",
+    "remove": "Usun"
+  },
+  "ClassificationSelector": {
+    "select": "Wybierz klasyfikacje"
+  },
+  "Classification": {
+    "name": {
+      "General": "Generalna",
+      "Black Horse": "Czarny kon",
+      "Mountain": "Gorska"
+    },
+    "Type": "Typ klasyfikacji",
+    "Categories": "Premie klasyfikacji"
+  },
+  "ClassificationMapping": {
+    "Heading" : "Mapowanie - pozycja w wyniku na punkty",
+    "Position" : "Pozycja",
+    "Points" : "Punkty",
+    "AddButton" : "Dodaj pozycje",
+    "SaveButton" : "Zapisz mapowanie"
+  },
+  "Navigation": {
+    "Competitions": "Zawody",
+    "ResultsLink": "Wyniki i premie"
+  },
+  "ClassificationEditor": {
+    "AddButton" : "Dodaj klasyfikacje"
+  },
+  "Competition": {
+    "ResultsLink": "Wszystkie wyniki i premie",
+    "ClassificationLink": "Wyswietl szczegoly",
+    "RemoveButton": "Usun "
+  },
+  "CompetitionRanking": {
+    "Header": "Aktualny ranking",
+    "Position": "Pozycja",
+    "Participant": "Uczestnik",
+    "Points": "Punkty"
+  },
+  "CategorySelector": {
+    "Type": "Typ premii: ",
+    "Header": "Wybierz premie: "
+  },
+  "ResultsType": {
+    "TIME": "Pomiar czasu",
+    "POSITION": "Pozycja"
+  }
+}

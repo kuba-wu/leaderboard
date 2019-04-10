@@ -29,22 +29,24 @@ public class InitialDataLoader {
 			new ResultsCategory(id(), "Black Horse", ResultsType.POSITION)};
 
 	private final ClassificationUpdate[] CLASSIFICATIONS = new ClassificationUpdate[] {
-			new ClassificationUpdate("Mountain", null, ResultsType.POSITION, names()),
+			new ClassificationUpdate("Mountain", null, ResultsType.POSITION, pointNames(false)),
 			new ClassificationUpdate("General", null, ResultsType.TIME, names()),
-			new ClassificationUpdate("Black Horse", null, ResultsType.POSITION, names())};
+			new ClassificationUpdate("Black Horse", null, ResultsType.POSITION, pointNames(true))};
 	
 	private final List<Results> RESULTS = new ArrayList<>(Arrays.asList(new Results[]{
-			new Results(null, parse("2019-01-10"), Arrays.asList(new SingleResult[] {
+			new Results(id(), parse("2019-01-10"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "1"), new SingleResult("zbyszek","3"), new SingleResult("jarek", "2")})),
-			new Results(null, parse("2019-01-11"), Arrays.asList(new SingleResult[] {
+			new Results(id(), parse("2019-01-11"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")})), 
-			new Results(null, parse("2019-01-12"), Arrays.asList(new SingleResult[] {
+			new Results(id(), parse("2019-01-12"), Arrays.asList(new SingleResult[] {
 					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")}))
 	}));
 
 	private final List<String> names() {
 		return Arrays.stream(CATEGORIES).map(category -> category.getName()).collect(Collectors.toList());
 	}
+
+	private final List<String> pointNames(boolean horse) { return names().stream().filter(name -> horse ^ !"Black Horse".equals(name)).collect(Collectors.toList());}
 
 	private final Date parse(String string) {
 		try {

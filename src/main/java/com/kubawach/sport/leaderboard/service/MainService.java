@@ -1,13 +1,6 @@
 package com.kubawach.sport.leaderboard.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.kubawach.sport.leaderboard.model.*;
@@ -30,7 +23,11 @@ public class MainService {
 	private final Map<String, Map<String, ResultsCategory>> categories = new HashMap<>();
 	
 	@Autowired private ClassificationRankingService classificationRankingService;
-	
+
+	private final String id() {
+		return UUID.randomUUID().toString();
+	}
+
 	public boolean addCompetition(Competition competition) {
 		if (competitions.containsKey(competition.getName())) {
 			log.warn("Competition "+competition.getName()+" already exists.");
@@ -61,24 +58,24 @@ public class MainService {
 
 	public Classification addClassification(String competition, ClassificationUpdate dto) {
 
-		String classification = dto.getName();
+		String name = dto.getName();
 		if (!competitions.containsKey(competition)) {
 			log.warn("Competition: "+competition+" not found");
 			return null;
 		}
-		if (classifications.get(competition).containsKey(classification)) {
-			log.warn("Classification: "+classification+" already set for competition: "+competition);
+		if (classifications.get(competition).containsKey(name)) {
+			log.warn("Classification: "+name+" already set for competition: "+competition);
 			return null;
 		}
 
 		PositionMapping mapping = (dto.getMapping() == null ? DEFAULT_MAPPING : dto.getMapping());
 		List<ResultsCategory> categories = categoriesByNames(this.categories.get(competition), dto.getResultsType(), dto.getCategoryNames());
-		Classification newClassification = new Classification("", classification, Collections.emptyList(), mapping, dto.getResultsType(), categories);
-		classifications.get(competition).put(classification, newClassification);
+		Classification newClassification = new Classification(id(), name, Collections.emptyList(), mapping, dto.getResultsType(), categories);
+		classifications.get(competition).put(name, newClassification);
 		// update ranking
-		updateClassification(competition, classification);
+		updateClassification(competition, name);
 		
-		log.info("Added classification: "+classification+" to competition: "+competition);
+		log.info("Added classification: "+name+" to competition: "+competition);
 		return newClassification;
 	}
 	

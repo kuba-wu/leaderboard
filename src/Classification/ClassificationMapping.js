@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
 
 class ClassificationMapping extends Component {
 	
@@ -32,9 +33,9 @@ class ClassificationMapping extends Component {
 	  mapping.positionToPoints[index] = event.target.value;
 	  this.setState({mapping: mapping});
   }
-  
 
   render() {
+	  const {t} = this.props;
 
 	  if (!this.state.mapping) {
 		  return null;
@@ -48,19 +49,19 @@ class ClassificationMapping extends Component {
       
 		return (
 			<div>
-				<h2>Position to points mapping</h2>
+				<h2>{t("ClassificationMapping.Heading")}</h2>
 				<table>
 					<thead>
 						<tr>
-							<th>Position</th><th>Points</th>
+							<th>{t("ClassificationMapping.Position")}</th><th>{t("ClassificationMapping.Points")}</th>
 						</tr>
 					</thead>
 					<tbody>{mapping}</tbody>
 				</table>
-				<button type="button" onClick={ this.addPosition.bind(this)}>Add position</button>
-	          	<button type="submit" onClick={ this.saveMapping.bind(this) }>Save mapping</button>
+				<button type="button" onClick={ this.addPosition.bind(this)}>{t("ClassificationMapping.AddButton")}</button>
+	          	<button type="submit" onClick={ this.saveMapping.bind(this) }>{t("ClassificationMapping.SaveButton")}</button>
 			</div>);
   }
 }
 
-export default ClassificationMapping;
+export default withTranslation()(ClassificationMapping);

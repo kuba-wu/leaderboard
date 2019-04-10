@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 class CompetitionLink extends Component {
 	
 	render() {
 		const competition = this.props.competition;
-		return competition ? (<span><a href={"/competition/" + competition}>{competition}</a>  &#9658; </span>) : null;
+		return competition ? (<span><a href={"/competition/" + competition}>{competition}</a>  </span>) : null;
 	}
 }
 
-class ResultsLink extends Component {
-	
+class ResultsLinkBase extends Component {
+
 	render() {
+		const {t} = this.props;
 		const competition = this.props.competition;
 		const results = this.props.results;
-		return results ? (<span><a href={"/competition/" + competition+"/results"}>{competition+" results"}</a></span>) : null;
+		const text = (this.props.text ? this.props.text : "\u25BA " + t("Navigation.ResultsLink"));
+		return results ? (<span><a href={"/competition/" + competition+"/results"}>{text}</a></span>) : null;
 	}
 }
 
@@ -22,8 +25,10 @@ class ClassificationLink extends Component {
 	render() {
 		const competition = this.props.competition;
 		const classification = this.props.classification;
-		return classification ? (<span><a href={"/competition/" + competition+"/classification/"+classification}>{classification}</a></span>) : null;
+		const text = (this.props.text ? this.props.text : `\u25BA ${classification}`);
+		return classification ? (<span><a href={"/competition/" + competition+"/classification/"+classification}>{text}</a></span>) : null;
 	}
 }
 
-export { CompetitionLink, ResultsLink, ClassificationLink }
+export const ResultsLink  = withTranslation()(ResultsLinkBase);
+export { CompetitionLink, ClassificationLink }

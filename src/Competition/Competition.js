@@ -6,6 +6,8 @@ import CompetitionRanking from './CompetitionRanking';
 import ClassificationSelector from './ClassificationSelector';
 import ClassificationEditor from './ClassificationEditor';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
+import Translation from '../Common/Translation'
 
 class Competiton extends Component {
 
@@ -47,11 +49,13 @@ class Competiton extends Component {
     setClassificationCallback = (classification) => this.setState({classification: classification});
 
     removeClassification(classification) {
-
+        console.log("TODO");
     }
 
     render() {
+        const {t} = this.props;
         const {error, isLoaded, classifications, classification} = this.state;
+
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -62,17 +66,18 @@ class Competiton extends Component {
             return (
                 <div>
                     <div>
-                        <span>View all</span><ResultsLink competition={competition} results={"results"}/>
+                        <ResultsLink competition={competition} results={"results"} text={t("Competition.ResultsLink")}/>
                     </div>
                     <div>
                         <ClassificationSelector classifications={classifications} classification={classification} setClassification={this.setClassificationCallback}/>
-                        <span> or </span>
                         <ClassificationEditor competition={competition} loadClassifications={this.loadClassificationCallback}/>
                     </div>
                     <div>
-                        <span>See <ClassificationLink competition={competition} classification={classification && classification.name}/> details </span>
-                        or
-                        <span><button disabled={!classification} type="button" onClick={this.removeClassification.bind(this, classification)}>Remove {classification && classification.name}</button></span>
+                        <ClassificationLink competition={competition} classification={classification && classification.name} text={t("Competition.ClassificationLink")}/>
+                        <span>
+                            <button disabled={!classification} type="button"
+                                    onClick={this.removeClassification.bind(this, classification)}>{t("Competition.RemoveButton")} {Translation.classification(t, classification)}</button>
+                        </span>
                     </div>
 
                     <CompetitionRanking positions={classification && classification.positions}/>
@@ -82,4 +87,4 @@ class Competiton extends Component {
     }
 }
 
-export default ComponentWithNavigation(Competiton);
+export default withTranslation()(ComponentWithNavigation(Competiton));

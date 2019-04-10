@@ -1,37 +1,38 @@
-import React, { Component } from 'react';
-
-//Import React Table
+import React, {Component} from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import { withTranslation } from 'react-i18next';
 
 class CompetitionRanking extends Component {
 
     constructor(props) {
         super(props);
+        const {t} = this.props;
         this.columns = [
-                        {
-                            Header: "Position",
-                            accessor: "position"
-                        },
-                        {
-                            Header: "Participant",
-                            accessor: "participant"
-                        },
-                        {
-                            Header: "Points",
-                            accessor: "points"
-                        }
-                    ];
-    } 
+            {
+                Header: t("CompetitionRanking.Position"),
+                accessor: "position"
+            },
+            {
+                Header: t("CompetitionRanking.Participant"),
+                accessor: "participant"
+            },
+            {
+                Header: t("CompetitionRanking.Points"),
+                accessor: "points"
+            }
+        ];
+    }
 
     render() {
+        const {t} = this.props;
         if (!this.props.positions) {
             return null;
         }
 
         return (
             <div>
-                <h2>Current ranking</h2>
+                <h2>{t("CompetitionRanking.Header")}</h2>
                 <ReactTable
                     data={this.props.positions}
                     columns={this.columns}
@@ -42,4 +43,4 @@ class CompetitionRanking extends Component {
     }
 }
 
-export default CompetitionRanking;
+export default withTranslation()(CompetitionRanking);

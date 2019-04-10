@@ -44,10 +44,12 @@ class Results extends Component {
         );
     }
 
-    loadResults(category, preselectedResult) {
+    loadResults(categoryId, preselectedResult) {
         const competition = this.props.match.params.competition;
 
-        axios.get(`/api/v1/competition/${competition}/category/${category}/results`).then(res => {
+        const selected = this.state.categories.filter(category =>  (categoryId === category.id))[0];
+
+        axios.get(`/api/v1/competition/${competition}/category/${selected.name}/results`).then(res => {
             const results = res.data.sort(function (first, second) {
                 return first.date.localeCompare(second.date);
             });
@@ -56,7 +58,7 @@ class Results extends Component {
                 isLoaded: true,
                 results: results,
                 result: (preselectedResult ? preselectedResult : firstResult),
-                category: category
+                category: selected
             });
 
         }).catch(error => {
@@ -77,8 +79,6 @@ class Results extends Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
-
-
 
             return (
                 <div>

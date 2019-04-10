@@ -11,14 +11,14 @@ public class Classification implements HasName {
 	private final String name;
 	private final List<Position> positions;
 	private final PositionMapping mapping;
-	private final ResultsType resultsType;
+	private final ResultsType type;
 	private final List<ResultsCategory> categories;
 	
 	public Classification forMapping(PositionMapping newMapping) {
-		return new Classification(id, name, positions, newMapping, resultsType, categories);
+		return new Classification(id, name, positions, newMapping, type, categories);
 	}
 
 	public Classification forRanking(List<Position> ranking) {
-		return new Classification(id, name, ranking, mapping, resultsType, categories);
+		return new Classification(id, name, ranking, mapping, type, categories);
 	}
 }

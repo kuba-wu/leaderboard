@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import ComponentWithNavigation from '../Common/ComponentWithNavigation';
+import Translation from '../Common/Translation';
+import { withTranslation } from 'react-i18next';
 
 import axios from 'axios';
 import ClassificationMapping from "./ClassificationMapping";
@@ -45,6 +47,7 @@ class Classification extends Component {
     loadClassificationCallback = () => this.loadClassification();
 
     render() {
+        const {t} = this.props;
         const { error, isLoaded, classification } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
@@ -57,10 +60,10 @@ class Classification extends Component {
             return (
                 <div>
                     <div>
-                        <span>Type: {classification.resultsType}</span>
+                        <span>{t('Classification.Type')}: {Translation.type(t, classification)}</span>
                     </div>
                     <div>
-                        <span>Categories: {categories}</span>
+                        <span>{t('Classification.Categories')}: {categories}</span>
                     </div>
                     <ClassificationMapping mapping={classification.mapping} classification={classification.name}
                                            competition={competition} loadClassifications={this.loadClassificationCallback} />
@@ -71,4 +74,4 @@ class Classification extends Component {
     }
 }
 
-export default ComponentWithNavigation(Classification);
+export default withTranslation()(ComponentWithNavigation(Classification));
