@@ -17,7 +17,7 @@
     "Categories": "Premie klasyfikacji"
   },
   "ClassificationMapping": {
-    "Heading" : "Mapowanie - pozycja w wyniku na punkty",
+    "Heading" : "Mapowanie - pozycja na premii do punktow",
     "Position" : "Pozycja",
     "Points" : "Punkty",
     "AddButton" : "Dodaj pozycje",

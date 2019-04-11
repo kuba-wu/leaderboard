@@ -5,7 +5,6 @@ class Translation {
     }
 
     static type(t, typeHolder) {
-        console.log(typeHolder);
         return typeHolder && t('ResultsType.'+typeHolder.type, typeHolder.type);
     }
 }

@@ -10,6 +10,8 @@ import Results from './Results/Results';
 import Classification from './Classification/Classification';
 
 import './App.css';
+import './tags.css';
+
 
 class App extends Component {
 
