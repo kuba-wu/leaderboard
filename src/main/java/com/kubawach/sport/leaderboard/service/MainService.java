@@ -199,4 +199,21 @@ public class MainService {
 
 		return true;
 	}
+
+	public void removeClassification(String competition, String classification) {
+
+		if (!competitions.containsKey(competition)) {
+			log.warn(String.format("Competition: %s not found", competition));
+			return ;
+		}
+		if (!classifications.get(competition).containsKey(classification)) {
+			log.warn(String.format("Classification: %s does not exist for competition: %s", classification, competition));
+			return ;
+		}
+
+		classifications.get(competition).remove(classification);
+
+		log.info("Removed classification: "+classification+" from competition: "+competition);
+		return ;
+	}
 }

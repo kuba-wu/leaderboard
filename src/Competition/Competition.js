@@ -6,7 +6,7 @@ import CompetitionRanking from './CompetitionRanking';
 import ClassificationSelector from './ClassificationSelector';
 import ClassificationEditor from './ClassificationEditor';
 import axios from 'axios';
-import { withTranslation } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import Translation from '../Common/Translation'
 
 class Competiton extends Component {
@@ -45,11 +45,12 @@ class Competiton extends Component {
             )
     }
 
-    loadClassificationCallback = (classification) => this.loadClassifications(classification);
     setClassificationCallback = (classification) => this.setState({classification: classification});
 
     removeClassification(classification) {
-        console.log("TODO");
+        const competition = this.props.match.params.competition;
+        axios.delete(`/api/v1/competition/${competition}/classification/${classification}`)
+            .then(() => this.loadClassifications());
     }
 
     render() {
@@ -63,6 +64,7 @@ class Competiton extends Component {
         } else {
 
             const competition = this.props.match.params.competition;
+            const removeButton = `${t("Competition.RemoveButton")} ${Translation.classification(t, classification)}`;
             return (
                 <div>
                     <div>
@@ -70,13 +72,13 @@ class Competiton extends Component {
                     </div>
                     <div>
                         <ClassificationSelector classifications={classifications} classification={classification} setClassification={this.setClassificationCallback}/>
-                        <ClassificationEditor competition={competition} loadClassifications={this.loadClassificationCallback}/>
+                        <ClassificationEditor competition={competition}/>
                     </div>
                     <div>
                         <ClassificationLink competition={competition} classification={classification && classification.name} text={t("Competition.ClassificationLink")}/>
                         <span>
                             <button disabled={!classification} type="button"
-                                    onClick={this.removeClassification.bind(this, classification)}>{t("Competition.RemoveButton")} {Translation.classification(t, classification)}</button>
+                                    onClick={this.removeClassification.bind(this, classification.name)}>{removeButton}</button>
                         </span>
                     </div>
 
