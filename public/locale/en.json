@@ -9,14 +9,15 @@
   },
   "Classification" : {
     "Type": "Classification type",
-    "Categories": "Categories"
+    "Categories": "Categories",
+    "AddCategory": "Add Category",
+    "SaveButton" : "Save"
   },
   "ClassificationMapping": {
     "Heading" : "Position to points mapping",
     "Position" : "Position",
     "Points" : "Points",
-    "AddButton" : "Add position",
-    "SaveButton" : "Save mapping"
+    "AddButton" : "Add position"
   },
   "Navigation": {
     "Competitions": "Competitions",

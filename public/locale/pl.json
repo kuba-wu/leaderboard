@@ -14,14 +14,15 @@
       "Mountain": "Gorska"
     },
     "Type": "Typ klasyfikacji",
-    "Categories": "Premie klasyfikacji"
+    "Categories": "Premie klasyfikacji",
+    "AddCategory": "Dodaj premie",
+    "SaveButton" : "Zapisz"
   },
   "ClassificationMapping": {
     "Heading" : "Mapowanie - pozycja na premii do punktow",
     "Position" : "Pozycja",
     "Points" : "Punkty",
-    "AddButton" : "Dodaj pozycje",
-    "SaveButton" : "Zapisz mapowanie"
+    "AddButton" : "Dodaj pozycje"
   },
   "Navigation": {
     "Competitions": "Zawody",

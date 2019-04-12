@@ -17,7 +17,8 @@ class Classification extends Component {
             error: null,
             isLoaded: false,
             classification: null,
-            categories: []
+            allCategories: [],
+            availableCategories: []
         };
     }
 
@@ -29,14 +30,23 @@ class Classification extends Component {
         const competition = this.props.match.params.competition;
         axios.get(`/api/v1/competition/${competition}/category`)
             .then((categoryList) => {
-
-                    const type = this.state.classification.type;
-                    const categories = categoryList.data.filter((category) => category.type === type);
                     this.setState({
-                        categories: categories
+                      allCategories: categoryList.data
                     });
+                    this.setAvailableCategories();
                 }
             )
+    }
+
+    setAvailableCategories() {
+      const type = this.state.classification.type;
+      const used = this.state.classification.categories;
+      const availableCategories = this.state.allCategories
+        .filter((category) => category.type === type)
+        .filter((category) => !used.some((usedCategory) => usedCategory.id === category.id));
+      this.setState({
+        availableCategories: availableCategories
+      });
     }
 
     loadClassification() {
@@ -61,10 +71,39 @@ class Classification extends Component {
             )
     }
 
-    loadClassificationCallback = () => this.loadClassification();
+    deleteCategory(index) {
+      const classification = this.state.classification;
+      classification.categories.splice(index, 1);
+      this.setState({classification: classification});
+      this.setAvailableCategories();
+    }
 
-    handleDelete = () => console.log("DELETE");
-    handleAddition = () => console.log("ADD");
+    addCategory(category) {
+      const classification = this.state.classification;
+      classification.categories.push(category);
+      this.setState({classification: classification});
+      this.setAvailableCategories();
+    }
+
+    loadClassificationCallback = () => this.loadClassification();
+    handleDelete = (index) => this.deleteCategory(index);
+    handleAddition = (category) => this.addCategory(category);
+    setMapping = (mapping) => {
+      const classification = this.state.classification;
+      classification.mapping = mapping;
+      this.setState({classification: classification});
+    };
+
+    save() {
+      const competition = this.props.match.params.competition;
+      axios.put(`/api/v1/competition/${competition}/classification`, this.state.classification)
+        .then((classification) => {
+            this.setState({
+              classification: classification.data
+            });
+          }
+        )
+    }
 
     render() {
         const {t} = this.props;
@@ -85,12 +124,13 @@ class Classification extends Component {
                         <span>{t('Classification.Categories')}: </span>
                         <ReactTags
                             tags={classification.categories}
-                            suggestions={this.state.categories}
+                            suggestions={this.state.availableCategories}
                             handleDelete={this.handleDelete.bind(this)}
-                            handleAddition={this.handleAddition.bind(this)}/>
+                            handleAddition={this.handleAddition.bind(this)}
+                            placeholder={t('Classification.AddCategory')} />
                     </div>
-                    <ClassificationMapping mapping={classification.mapping} classification={classification.name}
-                                           competition={competition} loadClassifications={this.loadClassificationCallback}/>
+                    <ClassificationMapping mapping={classification.mapping} setMapping={this.setMapping}/>
+                    <button type="button" onClick={this.save.bind(this)}>{t('Classification.SaveButton')}</button>
                     <CompetitionRanking positions={classification.positions}/>
                 </div>
             );

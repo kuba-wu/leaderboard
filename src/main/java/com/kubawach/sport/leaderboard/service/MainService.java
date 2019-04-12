@@ -73,7 +73,7 @@ public class MainService {
 		Classification newClassification = new Classification(id(), name, Collections.emptyList(), mapping, dto.getResultsType(), categories);
 		classifications.get(competition).put(name, newClassification);
 		// update ranking
-		updateClassification(competition, name);
+		updateClassificationRanking(competition, newClassification);
 		
 		log.info("Added classification: "+name+" to competition: "+competition);
 		return newClassification;
@@ -111,21 +111,20 @@ public class MainService {
 		// update relevant classifications
 		List<Classification> classifications = classificationsFor(competition);
 		for (Classification classification : classifications) {
-			updateClassification(competition, classification.getName());
+			updateClassificationRanking(competition, classification);
 		}
 		return result;
 	}
-	
-	public Classification savePositionMapping(String competition, String classification, PositionMapping mapping) {
-		if (!classifications.containsKey(competition) || !classifications.get(competition).containsKey(classification)) {
-			log.warn("Competition: "+competition+" or Classification: "+classification+" not found");
-			return null;
-		}
-		
-		Classification newClassification = classifications.get(competition).get(classification).forMapping(mapping);
-		classifications.get(competition).put(classification, newClassification);
-		return updateClassification(competition, classification);
-	}
+
+    public Classification updateClassification(String competition, Classification classification) {
+        if (!classifications.containsKey(competition) || !classifications.get(competition).containsKey(classification.getName())) {
+            log.warn("Competition: "+competition+" or Classification: "+classification.getName()+" not found");
+            return null;
+        }
+
+        classifications.get(competition).put(classification.getName(), classification);
+        return updateClassificationRanking(competition, classification);
+    }
 
 	private List<Results> resultsForCategories(String competition, List<ResultsCategory> categories) {
 		Map<String, List<Results>> resultMap = results.get(competition);
@@ -135,15 +134,14 @@ public class MainService {
 				.collect(Collectors.toList());
 	}
 
-	private Classification updateClassification(String competition, String classificationName) {
+	private Classification updateClassificationRanking(String competition, Classification classification) {
 
-		Classification classification = classifications.get(competition).get(classificationName);
 		PositionMapping resultToPoints = classification.getMapping();
 		List<Results> allResults = resultsForCategories(competition, classification.getCategories());
 		List<Position> ranking = classificationRankingService.calculateFor(allResults, resultToPoints);
 		
 		Classification updated = classification.forRanking(ranking);
-		classifications.get(competition).put(classificationName, updated);
+		classifications.get(competition).put(classification.getName(), updated);
 		return updated;
 	}
 	
