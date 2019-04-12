@@ -42,6 +42,15 @@ public class InitialDataLoader {
 					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")}))
 	}));
 
+	private final List<Results> SANKA_RESULTS = new ArrayList<>(Arrays.asList(new Results[]{
+			new Results(id(), parse("2019-01-10"), Arrays.asList(new SingleResult[] {
+					new SingleResult("staszek", "1"), new SingleResult("zbyszek","3"), new SingleResult("jarek", "2")})),
+			new Results(id(), parse("2019-01-11"), Arrays.asList(new SingleResult[] {
+					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")})),
+			new Results(id(), parse("2019-01-12"), Arrays.asList(new SingleResult[] {
+					new SingleResult("staszek", "3"), new SingleResult("zbyszek","1"), new SingleResult("jarek", "2")}))
+	}));
+
 	private final List<String> names() {
 		return Arrays.stream(CATEGORIES).map(category -> category.getName()).collect(Collectors.toList());
 	}
@@ -75,6 +84,9 @@ public class InitialDataLoader {
 		}
 		for (Results results : RESULTS) {
 			mainService.addResult("IC Race", "Finish", results);
+		}
+		for (Results results : SANKA_RESULTS) {
+			mainService.addResult("IC Race", "Sanka", results);
 		}
 	}
 }

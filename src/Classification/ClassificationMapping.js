@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { withTranslation } from 'react-i18next';
 
 class ClassificationMapping extends Component {
@@ -44,8 +43,8 @@ class ClassificationMapping extends Component {
         <table>
           <thead>
           <tr>
-            <th>{t('ClassificationMapping.Position')}</th>
-            <th>{t('ClassificationMapping.Points')}</th>
+            <th>{t('Common.Position')}</th>
+            <th>{t('Common.Points')}</th>
           </tr>
           </thead>
           <tbody>{mapping}</tbody>

@@ -10,15 +10,15 @@ class CompetitionRanking extends Component {
         const {t} = this.props;
         this.columns = [
             {
-                Header: t("CompetitionRanking.Position"),
+                Header: t("Common.Position"),
                 accessor: "position"
             },
             {
-                Header: t("CompetitionRanking.Participant"),
+                Header: t("Common.Participant"),
                 accessor: "participant"
             },
             {
-                Header: t("CompetitionRanking.Points"),
+                Header: t("Common.Points"),
                 accessor: "points"
             }
         ];

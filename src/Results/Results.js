@@ -32,8 +32,11 @@ class Results extends Component {
             this.setState({
                 isLoaded: true,
                 categories: categories,
-                category: (categories.length > 0 ? categories[0] : null)
+                category: (categories.firstOrNull())
             });
+            if (this.state.category) {
+                this.loadResults(this.state.category.id);
+            }
 
         }).catch(error => {
                 this.setState({
@@ -45,21 +48,20 @@ class Results extends Component {
     }
 
     loadResults(categoryId, preselectedResult) {
+
         const competition = this.props.match.params.competition;
+        const selectedCategory = this.state.categories.find(category => (categoryId === category.id));
 
-        const selected = this.state.categories.filter(category => (categoryId === category.id))[0];
-
-        axios.get(`/api/v1/competition/${competition}/category/${selected.name}/results`).then(res => {
-            const results = res.data.sort(function (first, second) {
-                return first.date.localeCompare(second.date);
-            });
-            const firstResult = (results.length > 0 ? results[0] : null);
+        axios.get(`/api/v1/competition/${competition}/category/${selectedCategory.name}/results`).then(res => {
+            const results = res.data.sort((first, second) => first.date.localeCompare(second.date));
             this.setState({
                 isLoaded: true,
                 results: results,
-                result: (preselectedResult ? preselectedResult : firstResult),
-                category: selected
+                category: selectedCategory
             });
+
+            const selectedResult = (preselectedResult ? preselectedResult : results.firstOrNull());
+            this.setResultSorted(selectedResult);
 
         }).catch(error => {
                 this.setState({
@@ -68,6 +70,19 @@ class Results extends Component {
                 });
             }
         );
+    }
+
+    setResultSorted(result) {
+        if (result) {
+          const results = result.results.sort((first, second) => (first.result.localeCompare(second.result)));
+          result.results = results;
+        }
+        this.setState({result: result});
+    }
+
+    selectResult(resultId) {
+        const result = this.state.results.find(single => single.id === resultId);
+        this.setResultSorted(result);
     }
 
     render() {
@@ -82,9 +97,9 @@ class Results extends Component {
 
             return (
                 <div>
-                    <CategorySelector categories={categories} loadResults={(category) => this.loadResults(category)} selected={category}/>
-                    <ResultsSelector results={results} setSelectedResult={(result) => this.setState({result: result})} selected={result}/>
-                    <ResultsTable result={result}/>
+                    <CategorySelector categories={categories} loadResults={(categoryId) => this.loadResults(categoryId)} selected={category}/>
+                    <ResultsSelector results={results} setSelectedResult={(result) => this.selectResult(result)} selected={result}/>
+                    <ResultsTable category={category} result={result}/>
                     <ResultsEditor loadResults={(category, result) => this.loadResults(category, result)} competition={competition} category={category}/>
                 </div>
             );

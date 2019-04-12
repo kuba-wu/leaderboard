@@ -20,8 +20,6 @@
   },
   "ClassificationMapping": {
     "Heading" : "Mapowanie - pozycja na premii do punktow",
-    "Position" : "Pozycja",
-    "Points" : "Punkty",
     "AddButton" : "Dodaj pozycje"
   },
   "Navigation": {
@@ -37,23 +35,14 @@
     "RemoveButton": "Usun "
   },
   "CompetitionRanking": {
-    "Header": "Aktualny ranking",
-    "Position": "Pozycja",
-    "Participant": "Uczestnik",
-    "Points": "Punkty"
+    "Header": "Aktualny ranking"
   },
   "CategorySelector": {
     "Type": "Typ premii: ",
     "Header": "Wybierz premie: "
   },
-  "ResultsType": {
-    "TIME": "Pomiar czasu",
-    "POSITION": "Pozycja"
-  },
   "ResultsEditor": {
     "Header": "Dodaj nowy wynik",
-    "Participant": "Uczestnik",
-    "Result": "Wynik",
     "AddButton" : "Kolejny wiersz",
     "SaveButton" : "Zapisz wyniki"
   },
@@ -64,5 +53,14 @@
     "Header": "Wyniki z dnia",
     "Participant": "Uczestnik",
     "Result": "Rezultat"
+  },
+  "Common": {
+    "ResultsType": {
+      "TIME": "Czas",
+      "POSITION": "Pozycja"
+    },
+    "Participant" : "Uczestnik",
+    "Position" : "Pozycja",
+    "Points" : "Punkty"
   }
 }

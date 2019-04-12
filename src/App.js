@@ -1,3 +1,4 @@
+import './Common/Enhancements';
 import React, {Component} from 'react';
 import {
     BrowserRouter as Router,

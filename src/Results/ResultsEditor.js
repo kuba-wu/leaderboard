@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { withTranslation } from 'react-i18next';
+import Translation from '../Common/Translation';
 
 class ResultsEditor extends Component {
 
@@ -53,9 +54,9 @@ class ResultsEditor extends Component {
         const body = this.state.newResult;
 
         axios
-            .post(`/api/v1/competition/${competition}/category/${category}/results`, body)
+            .post(`/api/v1/competition/${competition}/category/${category.name}/results`, body)
             .then((result) => {
-                this.props.loadResults(this.props.category, result.data);
+                this.props.loadResults(category.id, result.data);
                 this.resetNewResult();
             });
 
@@ -87,8 +88,8 @@ class ResultsEditor extends Component {
                 <table>
                     <thead>
                     <tr>
-                        <th>{t('ResultsEditor.Participant')}</th>
-                        <th>{t('ResultsEditor.Result')}</th>
+                      <th>{t('Common.Participant')}</th>
+                        <th>{Translation.type(t, category)}</th>
                     </tr>
                     </thead>
                     <tbody>

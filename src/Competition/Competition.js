@@ -25,7 +25,7 @@ class Competiton extends Component {
         this.loadClassifications();
     }
 
-    loadClassifications(classification) {
+    loadClassifications(preselectedClassification) {
         const competition = this.props.match.params.competition;
         axios.get("/api/v1/competition/" + competition + "/classification")
             .then((result) => {
@@ -33,7 +33,7 @@ class Competiton extends Component {
                     this.setState({
                         isLoaded: true,
                         classifications: result.data,
-                        classification: (classification ? classification : (result.data.length > 0 ? result.data[0] : null)),
+                        classification: (preselectedClassification ? preselectedClassification : result.data.firstOrNull()),
                     });
                 },
                 (error) => {
@@ -78,7 +78,7 @@ class Competiton extends Component {
                         <ClassificationLink competition={competition} classification={classification && classification.name} text={t("Competition.ClassificationLink")}/>
                         <span>
                             <button disabled={!classification} type="button"
-                                    onClick={this.removeClassification.bind(this, classification.name)}>{removeButton}</button>
+                                    onClick={this.removeClassification.bind(this, classification && classification.name)}>{removeButton}</button>
                         </span>
                     </div>
 

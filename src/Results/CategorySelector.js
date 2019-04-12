@@ -6,7 +6,6 @@ class CategorySelector extends Component {
 
     categoryInfo() {
         const {t} = this.props;
-        console.log(this.props);
         const typeName = Translation.type(t, this.props.selected);
         return (
             <div>
@@ -16,11 +15,18 @@ class CategorySelector extends Component {
     }
 
     render() {
-        const optionItems = this.props.categories.map(
+
+      const {categories, selected} = this.props;
+
+      if (!categories || !categories.length) {
+          return null;
+      }
+
+        const optionItems = categories.map(
             (category) =>
                 <option key={category.id} value={category.id}>{category.name}</option>);
 
-        const categoryInfo = (this.props.selected ? this.categoryInfo() : null);
+        const categoryInfo = (selected ? this.categoryInfo() : null);
 
         return (
             <div style={{border: '1px solid black', margin: '3px'}}>

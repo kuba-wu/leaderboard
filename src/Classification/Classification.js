@@ -42,8 +42,8 @@ class Classification extends Component {
       const type = this.state.classification.type;
       const used = this.state.classification.categories;
       const availableCategories = this.state.allCategories
-        .filter((category) => category.type === type)
-        .filter((category) => !used.some((usedCategory) => usedCategory.id === category.id));
+        .filter(category => category.type === type)
+        .filter(category => !used.some(usedCategory => usedCategory.id === category.id));
       this.setState({
         availableCategories: availableCategories
       });
@@ -114,7 +114,6 @@ class Classification extends Component {
             return <div>Loading...</div>;
         } else {
 
-            const competition = this.props.match.params.competition;
             return (
                 <div>
                     <div>

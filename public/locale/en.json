@@ -15,8 +15,6 @@
   },
   "ClassificationMapping": {
     "Heading" : "Position to points mapping",
-    "Position" : "Position",
-    "Points" : "Points",
     "AddButton" : "Add position"
   },
   "Navigation": {
@@ -24,7 +22,7 @@
     "ResultsLink": "Results and categories"
   },
   "ClassificationEditor": {
-    "AddButton" : "Add new"
+    "AddButton" : "Add new classification"
   },
   "Competition": {
     "ResultsLink": "View all results and categories",
@@ -32,23 +30,14 @@
     "RemoveButton": "Remove"
   },
   "CompetitionRanking": {
-    "Header": "Current ranking",
-    "Position": "Position",
-    "Participant": "Participant",
-    "Points": "Points"
+    "Header": "Current ranking"
   },
   "CategorySelector": {
     "Type": "Category type: ",
     "Header": "Select category: "
   },
-  "ResultsType": {
-    "TIME": "Time",
-    "POSITION": "Position"
-  },
   "ResultsEditor": {
     "Header": "Add new results",
-    "Participant": "Participant",
-    "Result": "Result",
     "AddButton" : "Add next",
     "SaveButton" : "Save result"
   },
@@ -56,8 +45,15 @@
     "Header": "Select results:"
   },
   "ResultsTable": {
-    "Header": "Results from",
-    "Participant": "Participant",
-    "Result": "Result"
+    "Header": "Results from"
+  },
+  "Common": {
+    "ResultsType": {
+      "TIME": "Time",
+      "POSITION": "Position"
+    },
+    "Participant" : "Participant",
+    "Position" : "Position",
+    "Points" : "Points"
   }
 }

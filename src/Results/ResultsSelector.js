@@ -15,10 +15,11 @@ class ResultsSelector extends Component {
             (result) =>
                 <option key={result.id} value={result.id}>{result.date}</option>);
 
+        const selected = (this.props.selected ? this.props.selected.id : "");
         return (
             <div>
                 <span>{t('ResultsSelector.Header')}</span>
-                <select onChange={(e) => this.props.setSelectedResult(e.target.value)} value={this.props.selected && this.props.selected.id}>
+                <select onChange={(e) => this.props.setSelectedResult(e.target.value)} value={selected}>
                     {optionItems}
                 </select>
             </div>
